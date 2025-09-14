@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Solar Tourism — Travel Brighter</title>
+  <meta name="description" content="Solar Tourism — Handpicked travel packages, flexible dates, best-price assurance." />
+
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-white">
+   <header class="fixed top-0 inset-x-0 z-50 bg-slate-900/95 backdrop-blur border-b border-slate-800 text-white h-20 md:h-16">
+    <div class="max-w-7xl mx-auto px-4 lg:px-8">
+      <div class="h-14 md:h-16 flex items-center justify-between">
+        
+        <!-- Logo -->
+        <a href="#" data-page="home" class="flex items-center gap-2 group" onclick="navigate('home')">
+          <div class="w-9 h-9 rounded-xl grid place-items-center text-white font-bold" style="background:var(--primary);">☀️</div>
+          <div>
+            <div class="heading text-lg leading-5 font-bold text-white group-hover:text-white transition">Solar Tourism</div>
+            <div class="text-xs text-white/70 -mt-0.5">Travel brighter</div>
+          </div>
+        </a>
+        <!-- Desktop Nav -->
+        <nav class="hidden md:flex items-center gap-6 text-sm">
+          <button class="text-white/90 hover:text-white transition" onclick="navigate('home')">Home</button>
+          <button class="text-white/90 hover:text-white transition" onclick="navigate('destinations')">Destinations</button>
+          <button class="text-white/90 hover:text-white transition" onclick="navigate('packages')">Packages</button>
+          <button class="text-white/90 hover:text-white transition" onclick="navigate('about')">About</button>
+          <button class="text-white/90 hover:text-white transition" onclick="navigate('blog')">Blog</button>
+          <button class="text-white/90 hover:text-white transition" onclick="navigate('contact')">Contact</button>
+        </nav>
+        <!-- CTAs -->
+        <div class="hidden md:flex items-center gap-3">
+          <button onclick="openEnquiry()" class="px-4 py-2 rounded-xl bg-[var(--secondary)] text-white font-medium hover:brightness-110 transition focus-ring">Enquire Now</button>
+          <button onclick="quickBook()" class="px-4 py-2 rounded-xl bg-white/10 text-white font-medium hover:bg-white/20 transition focus-ring">Book Now</button>
+        </div>
+        <!-- Mobile -->
+        <div class="md:hidden flex items-center gap-2">
+          <button onclick="openEnquiry()" class="px-3 py-2 rounded-lg bg-[var(--secondary)] text-white text-sm">Enquire</button>
+          <button aria-label="Open menu" class="w-10 h-10 rounded-lg grid place-items-center border border-slate-700 text-white" onclick="toggleMobileMenu()">
+            <span class="sr-only">Menu</span>
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          </button>
+        </div>
+      </div>
+      <!-- Mobile Menu -->
+      <div id="mobileMenu" class="md:hidden slide-hidden transition duration-200 origin-top pointer-events-none opacity-0">
+        <div class="bg-slate-900/95 text-white border border-slate-800 rounded-2xl p-4 mb-4">
+          <div class="grid gap-2">
+            <button class="text-left px-3 py-3 rounded-lg hover:bg-white/10" onclick="navigate('home');toggleMobileMenu()">Home</button>
+            <button class="text-left px-3 py-3 rounded-lg hover:bg-white/10" onclick="navigate('destinations');toggleMobileMenu()">Destinations</button>
+            <button class="text-left px-3 py-3 rounded-lg hover:bg-white/10" onclick="navigate('packages');toggleMobileMenu()">Packages</button>
+            <button class="text-left px-3 py-3 rounded-lg hover:bg-white/10" onclick="navigate('about');toggleMobileMenu()">About</button>
+            <button class="text-left px-3 py-3 rounded-lg hover:bg-white/10" onclick="navigate('blog');toggleMobileMenu()">Blog</button>
+            <button class="text-left px-3 py-3 rounded-lg hover:bg-white/10" onclick="navigate('contact');toggleMobileMenu()">Contact</button>
+          </div>
+          <div class="mt-4 grid grid-cols-2 gap-2">
+            <button onclick="openEnquiry()" class="px-3 py-3 rounded-lg bg-[var(--secondary)] text-white">Enquire</button>
+            <button onclick="quickBook()" class="px-3 py-3 rounded-lg bg-[var(--primary)] text-white">Book</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Floating WhatsApp/Chat -->
+  <button onclick="openChat()" class="fixed bottom-5 right-5 z-50 pill px-4 py-3 bg-green-500 hover:bg-green-600 text-white shadow-lg flex items-center gap-2">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M20.52 3.48A11.94 11.94 0 0 0 12 0C5.37 0 0 5.37 0 12c0 2.11.55 4.19 1.6 6.02L0 24l6.14-1.6A11.93 11.93 0 0 0 12 24c6.63 0 12-5.37 12-12 0-3.2-1.25-6.21-3.48-8.52zM12 21.6c-1.89 0-3.73-.5-5.34-1.44l-.38-.22-3.62.95.97-3.52-.25-.4A9.59 9.59 0 0 1 2.4 12C2.4 6.7 6.7 2.4 12 2.4c2.57 0 4.98 1 6.8 2.8 1.82 1.82 2.8 4.23 2.8 6.8 0 5.3-4.3 9.6-9.6 9.6zm5.52-6.6c-.3-.15-1.77-.88-2.05-.98-.28-.1-.48-.15-.68.15-.2.3-.78.98-.95 1.18-.17.2-.35.22-.65.07-.3-.15-1.25-.46-2.38-1.47-.88-.78-1.47-1.75-1.64-2.05-.17-.3-.02-.47.13-.62.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.07-.15-.68-1.64-.93-2.25-.25-.6-.5-.52-.68-.52h-.57c-.2 0-.52.07-.8.37-.28.3-1.05 1.03-1.05 2.5 0 1.47 1.08 2.9 1.23 3.1.15.2 2.12 3.23 5.13 4.52.72.3 1.28.48 1.72.62.72.23 1.37.2 1.88.12.57-.08 1.77-.72 2.02-1.42.25-.7.25-1.3.17-1.42-.08-.12-.27-.2-.57-.35z"/></svg>
+    Chat
+  </button>
+
+  <!-- Chat Panel -->
+  <div id="chatPanel" class="hidden fixed bottom-20 right-5 z-50 w-80 max-w-[92vw] bg-white border border-slate-200 rounded-2xl shadow-xl">
+    <div class="p-4 border-b flex items-center justify-between">
+      <div class="font-semibold">Need help?</div>
+      <button class="text-slate-500 hover:text-slate-700" onclick="closeChat()">✕</button>
+    </div>
+    <div class="p-4 space-y-3 max-h-64 overflow-auto">
+      <div class="text-sm text-slate-700">Hi! 👋 How can we help plan your trip?</div>
+      <div class="grid gap-2">
+        <a class="px-3 py-2 rounded-lg bg-emerald-50 text-emerald-700 hover:bg-emerald-100" href="https://wa.me/9322527567" target="_blank" rel="noopener">WhatsApp us</a>
+        <button class="px-3 py-2 rounded-lg bg-sky-50 text-sky-700 hover:bg-sky-100" onclick="openEnquiry()">Send an enquiry</button>
+        <a class="px-3 py-2 rounded-lg bg-orange-50 text-orange-700 hover:bg-orange-100" href="tel:+919322527567">Call +1 9322527567</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Content Wrapper -->
+  <main class="pt-20">
+    <!-- HOME -->
+    <section id="page-home" class="block">
+      <!-- Hero -->
+      <div class="hero-gradient">
+        <div class="max-w-7xl mx-auto px-4 lg:px-8 py-14 lg:py-20 grid lg:grid-cols-2 gap-12 items-center">
+          <div>
+            <div class="inline-flex items-center gap-2 px-3 py-1 pill bg-[var(--primary)]/10 text-[var(--primary)] text-sm font-medium mb-4">
+              ☀️ Summer Deals • Up to 20% off
+            </div>
+            <h1 class="heading text-4xl lg:text-6xl font-bold leading-tight text-slate-900 tracking-wide uppercase">
+              Discover Sun‑Soaked Escapes with Solar Tourism
+            </h1>
+            <p class="mt-4 text-slate-600 text-lg">Handpicked packages, flexible dates, and best‑price assurance across beaches, adventures, and cultural journeys.</p>
+
+            <!-- Search Form -->
+            <div class="mt-8 glass border border-slate-200 rounded-2xl p-4 lg:p-5 card-shadow">
+              <div class="grid md:grid-cols-5 grid-cols-1 gap-3">
+                <div>
+                  <label class="text-sm text-slate-600">Destination</label>
+                  <input id="search-destination" class="w-full mt-1 px-3 py-2 rounded-lg border focus-ring" placeholder="e.g., Bali, Santorini" />
+                </div>
+                <div>
+                  <label class="text-sm text-slate-600">Dates</label>
+                  <input id="search-dates" type="date" class="w-full mt-1 px-3 py-2 rounded-lg border focus-ring" />
+                </div>
+                <div>
+                  <label class="text-sm text-slate-600">Duration</label>
+                  <select id="search-duration" class="w-full mt-1 px-3 py-2 rounded-lg border focus-ring">
+                    <option>Any</option>
+                    <option>3-4 days</option>
+                    <option>5-7 days</option>
+                    <option>8-10 days</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="text-sm text-slate-600">Budget</label>
+                  <select id="search-budget" class="w-full mt-1 px-3 py-2 rounded-lg border focus-ring">
+                    <option>Any</option>
+                    <option>Under ₹80,000</option>
+                    <option>₹80,000 - ₹1,50,000</option>
+                    <option>₹1,50,000+</option>
+                  </select>
+                </div>
+                <div class="flex items-end">
+                  <button onclick="applySearch()" class="w-full px-4 py-3 rounded-xl bg-[var(--primary)] text-white font-semibold hover:brightness-110 focus-ring">Search</button>
+                </div>
+              </div>
+              <div class="flex flex-wrap gap-2 mt-3">
+                <button class="px-3 py-1 pill bg-[var(--primary)]/10 text-[var(--primary)] text-sm" onclick="quickFilter('Beach')">Beach</button>
+                <button class="px-3 py-1 pill bg-[var(--primary)]/10 text-[var(--primary)] text-sm" onclick="quickFilter('Adventure')">Adventure</button>
+                <button class="px-3 py-1 pill bg-[var(--primary)]/10 text-[var(--primary)] text-sm" onclick="quickFilter('Culture')">Culture</button>
+                <button class="px-3 py-1 pill bg-[var(--primary)]/10 text-[var(--primary)] text-sm" onclick="quickFilter('Family')">Family</button>
+              </div>
+            </div>
+          </div>
+          <!-- Hero Visual: SVG illustration -->
+          <div class="relative">
+            <div class="absolute -top-6 -right-4 hidden lg:block">
+              <span class="px-3 py-1 pill badge text-xs">Best Price</span>
+            </div>
+            <div class="rounded-3xl overflow-hidden border border-slate-200 card-shadow">
+              <svg viewBox="0 0 1200 800" class="w-full h-auto" role="img" aria-label="Destination illustration">
+                <defs>
+                  <linearGradient id="skyGrad" x1="0" x2="0" y1="0" y2="1">
+                    <stop offset="0%" stop-color="#90CAF9"/>
+                    <stop offset="100%" stop-color="#E3F2FD"/>
+                  </linearGradient>
+                  <linearGradient id="seaGrad" x1="0" x2="0" y1="0" y2="1">
+                    <stop offset="0%" stop-color="#42A5F5"/>
+                    <stop offset="100%" stop-color="#1E88E5"/>
+                  </linearGradient>
+                  <linearGradient id="sunGrad" x1="0" x2="1" y1="0" y2="1">
+                    <stop offset="0%" stop-color="#FDD835"/>
+                    <stop offset="100%" stop-color="#FB8C00"/>
+                  </linearGradient>
+                </defs>
+                <rect width="1200" height="800" fill="url(#skyGrad)"/>
+                <circle cx="980" cy="140" r="80" fill="url(#sunGrad)"/>
+                <rect y="520" width="1200" height="280" fill="url(#seaGrad)"/>
+                <g opacity="0.8">
+                  <path d="M0 520 Q200 560 400 520 T1200 520 V800 H0 Z" fill="#64B5F6"/>
+                </g>
+                <g>
+                  <rect x="140" y="360" width="300" height="160" rx="20" fill="#FFE082" />
+                  <rect x="180" y="330" width="60" height="40" rx="6" fill="#FFCC80" />
+                  <rect x="160" y="400" width="80" height="50" rx="8" fill="#FFF3E0" />
+                  <rect x="260" y="400" width="140" height="50" rx="8" fill="#FFF3E0" />
+                </g>
+                <g>
+                  <polygon points="780,420 860,280 940,420" fill="#A5D6A7"/>
+                  <polygon points="820,420 900,300 980,420" fill="#81C784"/>
+                </g>
+                <g>
+                  <rect x="720" y="150" width="160" height="90" rx="10" fill="#E1F5FE" stroke="#90CAF9"/>
+                  <circle cx="760" cy="195" r="10" fill="#90CAF9"/>
+                  <circle cx="800" cy="195" r="10" fill="#90CAF9"/>
+                  <circle cx="840" cy="195" r="10" fill="#90CAF9"/>
+                </g>
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Featured Destinations -->
+      <section class="py-14 bg-white">
+        <div class="max-w-7xl mx-auto px-4 lg:px-8">
+          <div class="flex items-end justify-between gap-6">
+            <div>
+              <h2 class="heading text-3xl lg:text-4xl font-bold">Featured Destinations</h2>
+              <p class="text-slate-600 mt-2">From tropical beaches to mountain escapes — find your perfect trip.</p>
+            </div>
+            <button class="hidden md:inline-flex px-4 py-2 rounded-xl border hover:bg-slate-50" onclick="navigate('destinations')">View all</button>
+          </div>
+
+          <div id="featuredGrid" class="mt-8 grid sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+        </div>
+      </section>
+
+      <!-- Popular Packages -->
+      <section class="py-14 bg-[var(--section)]">
+        <div class="max-w-7xl mx-auto px-4 lg:px-8">
+          <div class="flex items-end justify-between gap-6">
+            <div>
+              <h2 class="heading text-3xl lg:text-4xl font-bold">Popular Packages</h2>
+              <p class="text-slate-600 mt-2">Handpicked and loved by travelers worldwide.</p>
+            </div>
+          </div>
+
+          <div class="mt-8 overflow-hidden">
+            <div id="packageCarousel" class="flex gap-6 overflow-x-auto pb-4 snap-x"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Why Choose Us -->
+      <section class="py-14 bg-white">
+        <div class="max-w-7xl mx-auto px-4 lg:px-8">
+          <h2 class="heading text-3xl lg:text-4xl font-bold text-center">Why Choose Solar</h2>
+          <div class="grid md:grid-cols-4 sm:grid-cols-2 grid-cols-1 gap-6 mt-8">
+            <div class="p-6 border rounded-2xl card-shadow">
+              <div class="w-12 h-12 grid place-items-center rounded-xl bg-sky-100 text-sky-700 mb-3">💸</div>
+              <div class="font-semibold">Best Price Guarantee</div>
+              <p class="text-slate-600 text-sm mt-1">Transparent pricing with seasonal offers and perks.</p>
+            </div>
+            <div class="p-6 border rounded-2xl card-shadow">
+              <div class="w-12 h-12 grid place-items-center rounded-xl bg-emerald-100 text-emerald-700 mb-3">🧭</div>
+              <div class="font-semibold">Verified Local Guides</div>
+              <p class="text-slate-600 text-sm mt-1">Curated partners to ensure safety and authenticity.</p>
+            </div>
+            <div class="p-6 border rounded-2xl card-shadow">
+              <div class="w-12 h-12 grid place-items-center rounded-xl bg-orange-100 text-orange-700 mb-3">🕑</div>
+              <div class="font-semibold">24/7 Support</div>
+              <p class="text-slate-600 text-sm mt-1">We’re here before, during, and after your trip.</p>
+            </div>
+            <div class="p-6 border rounded-2xl card-shadow">
+              <div class="w-12 h-12 grid place-items-center rounded-xl bg-indigo-100 text-indigo-700 mb-3">🗓️</div>
+              <div class="font-semibold">Flexible Dates</div>
+              <p class="text-slate-600 text-sm mt-1">Free rescheduling on eligible packages.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Testimonials -->
+      <section class="py-14 bg-[var(--section)]">
+        <div class="max-w-7xl mx-auto px-4 lg:px-8">
+          <h2 class="heading text-3xl lg:text-4xl font-bold text-center">Traveler Love</h2>
+          <div id="testimonials" class="grid md:grid-cols-3 gap-6 mt-8"></div>
+        </div>
+      </section>
+
+      <!-- Newsletter -->
+      <section class="py-10 bg-[var(--secondary)]/15">
+        <div class="max-w-7xl mx-auto px-4 lg:px-8 flex flex-col lg:flex-row items-center justify-between gap-6">
+          <div>
+            <div class="heading text-2xl font-bold">Get travel tips & exclusive deals</div>
+            <p class="text-slate-800/80">Join our newsletter. Unsubscribe anytime.</p>
+          </div>
+          <div class="w-full lg:w-auto flex gap-2">
+            <input id="newsletterEmail" class="w-full lg:w-80 px-4 py-3 rounded-xl bg-white border" placeholder="you@email.com" />
+            <button onclick="subscribeNewsletter()" class="px-5 py-3 rounded-xl bg-[var(--secondary)] text-white font-medium">Subscribe</button>
+          </div>
+        </div>
+      </section>
+    </section>
+
+    <!-- DESTINATIONS -->
+    <section id="page-destinations" class="hidden">
+      <div class="max-w-7xl mx-auto px-4 lg:px-8 py-10 lg:py-14">
+        <div class="flex items-end justify-between gap-6">
+          <div>
+            <h2 class="heading text-3xl lg:text-4xl font-bold">Explore Destinations</h2>
+            <p class="text-slate-600 mt-2">Filter by theme, duration, and budget.</p>
+          </div>
+          <div class="hidden md:flex items-center gap-3">
+            <label class="text-sm text-slate-600">Sort by</label>
+            <select id="destSort" class="px-3 py-2 rounded-lg border" onchange="sortDestinations()">
+              <option value="popular">Popularity</option>
+              <option value="price">Price</option>
+              <option value="duration">Duration</option>
+              <option value="rating">Rating</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="mt-8 grid lg:grid-cols-4 gap-6">
+          <!-- Filters -->
+          <aside class="lg:col-span-1">
+            <div class="border rounded-2xl p-5 card-shadow">
+              <div class="font-semibold mb-3">Filters</div>
+              <div class="space-y-4 text-sm">
+                <div>
+                  <div class="font-medium mb-1">Theme</div>
+                  <div class="flex flex-wrap gap-2">
+                    <label class="px-3 py-1 pill border"><input type="checkbox" class="mr-2" value="Beach" onchange="filterDestinations()">Beach</label>
+                    <label class="px-3 py-1 pill border"><input type="checkbox" class="mr-2" value="Adventure" onchange="filterDestinations()">Adventure</label>
+                    <label class="px-3 py-1 pill border"><input type="checkbox" class="mr-2" value="Culture" onchange="filterDestinations()">Culture</label>
+                    <label class="px-3 py-1 pill border"><input type="checkbox" class="mr-2" value="Family" onchange="filterDestinations()">Family</label>
+                  </div>
+                </div>
+                <div>
+                  <div class="font-medium mb-1">Duration</div>
+                  <select id="filter-duration" class="w-full px-3 py-2 rounded-lg border" onchange="filterDestinations()">
+                    <option>Any</option>
+                    <option>3-4 days</option>
+                    <option>5-7 days</option>
+                    <option>8-10 days</option>
+                  </select>
+                </div>
+                <div>
+                  <div class="font-medium mb-1">Budget</div>
+                  <select id="filter-budget" class="w-full px-3 py-2 rounded-lg border" onchange="filterDestinations()">
+                    <option>Any</option>
+                    <option>Under ₹80,000</option>
+                    <option>₹80,000 - ₹1,50,000</option>
+                    <option>₹1,50,000+</option>
+                  </select>
+                </div>
+                <div>
+                  <div class="font-medium mb-1">Rating</div>
+                  <input id="filter-rating" type="range" min="3" max="5" step="0.5" value="4" class="w-full" oninput="filterDestinations()">
+                  <div class="text-xs text-slate-600">Min: <span id="ratingValue">4</span> ★</div>
+                </div>
+                <button class="mt-2 w-full px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200" onclick="resetFilters()">Reset</button>
+              </div>
+            </div>
+          </aside>
+
+          <!-- Grid -->
+          <div class="lg:col-span-3">
+            <div id="destGrid" class="grid sm:grid-cols-2 xl:grid-cols-3 gap-6"></div>
+            <div class="flex items-center justify-center gap-2 mt-8">
+              <button class="px-3 py-2 rounded-lg border" onclick="paginate(-1)">Previous</button>
+              <div id="pageIndicator" class="text-sm text-slate-600">Page 1</div>
+              <button class="px-3 py-2 rounded-lg border" onclick="paginate(1)">Next</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PACKAGE DETAILS -->
+    <section id="page-packages" class="hidden">
+      <div class="max-w-7xl mx-auto px-4 lg:px-8 py-10 lg:py-14">
+        <div id="packageHeader" class="flex flex-col lg:flex-row gap-6">
+          <div class="flex-1">
+            <h2 class="heading text-3xl lg:text-4xl font-bold" id="pkgTitle">Bali Beaches & Temples</h2>
+            <div class="mt-2 flex flex-wrap items-center gap-3 text-slate-600">
+              <span id="pkgLocation">📍 Bali, Indonesia</span>
+              <span class="rating-star">★★★★★</span>
+              <span class="px-2 py-1 pill bg-emerald-50 text-emerald-700 text-xs">Free Cancellation</span>
+              <span class="px-2 py-1 pill bg-indigo-50 text-indigo-700 text-xs">Instant Confirmation</span>
+            </div>
+          </div>
+          <div class="w-full lg:w-auto">
+            <div class="border rounded-2xl p-5 card-shadow">
+              <div class="text-slate-500 text-sm">From</div>
+              <div class="heading text-3xl font-bold"><span id="pkgPriceText">₹79,999</span> <span class="text-base text-slate-500 font-normal">/ person</span></div>
+              <div class="text-xs text-rose-500 line-through mt-1 opacity-70" id="pkgStrike">₹89,999</div>
+              <div class="flex gap-2 mt-4">
+                <button onclick="quickBook()" class="px-4 py-2 rounded-xl bg-[var(--primary)] text-white font-semibold">Book Now</button>
+                <button onclick="openEnquiry()" class="px-4 py-2 rounded-xl border">Enquire</button>
+                <button onclick="sharePackage()" class="px-4 py-2 rounded-xl border">Share</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Gallery -->
+        <div class="mt-8 grid lg:grid-cols-3 gap-4">
+          <div class="lg:col-span-2 rounded-2xl overflow-hidden border card-shadow">
+            <div class="w-full aspect-[16/9] bg-sky-200 grid place-items-center text-sky-700 font-medium">Package Gallery</div>
+          </div>
+          <div class="grid grid-rows-2 gap-4">
+            <div class="rounded-2xl overflow-hidden border card-shadow w-full aspect-[16/9] bg-orange-100 grid place-items-center text-orange-700">Scenic View</div>
+            <div class="rounded-2xl overflow-hidden border card-shadow w-full aspect-[16/9] bg-emerald-100 grid place-items-center text-emerald-700">Local Culture</div>
+          </div>
+        </div>
+
+        <!-- Tabs -->
+        <div class="mt-8 border-b flex gap-6 text-sm">
+          <button class="pb-3 border-b-2 tab-active" data-tab="overview" onclick="switchTab(event)">Overview</button>
+          <button class="pb-3 border-b-2 tab-inactive" data-tab="itinerary" onclick="switchTab(event)">Itinerary</button>
+          <button class="pb-3 border-b-2 tab-inactive" data-tab="inclusions" onclick="switchTab(event)">Inclusions</button>
+          <button class="pb-3 border-b-2 tab-inactive" data-tab="exclusions" onclick="switchTab(event)">Exclusions</button>
+          <button class="pb-3 border-b-2 tab-inactive" data-tab="reviews" onclick="switchTab(event)">Reviews</button>
+          <button class="pb-3 border-b-2 tab-inactive" data-tab="faqs" onclick="switchTab(event)">FAQs</button>
+        </div>
+
+        <div class="mt-6">
+          <div id="tab-overview" class="grid md:grid-cols-2 gap-6">
+            <div class="border rounded-2xl p-5 card-shadow">
+              <div class="font-semibold mb-2">Highlights</div>
+              <ul class="list-disc pl-5 text-slate-700 space-y-1">
+                <li>Uluwatu sunset & Kecak dance</li>
+                <li>Nusa Penida day trip</li>
+                <li>Ubud rice terraces & temples</li>
+              </ul>
+            </div>
+            <div class="border rounded-2xl p-5 card-shadow">
+              <div class="font-semibold mb-2">Good to Know</div>
+              <p class="text-slate-700">Ideal for couples and families. Best time May–September. Visa on arrival available for many countries.</p>
+            </div>
+          </div>
+
+          <div id="tab-itinerary" class="hidden">
+            <div class="space-y-4">
+              <details class="border rounded-2xl p-5 card-shadow" open>
+                <summary class="font-semibold cursor-pointer">Day 1 — Arrival & Relax</summary>
+                <p class="text-slate-700 mt-2">Airport pickup, beachside dinner, optional spa.</p>
+                <P>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Doloribus modi nihil nemo ut aliquid adipisci tempora voluptatum quo, odit, iure aperiam a expedita itaque ullam, eum iste quisquam temporibus beatae.</P>
+              </details>
+              <details class="border rounded-2xl p-5 card-shadow">
+                <summary class="font-semibold cursor-pointer">Day 2 — Ubud & Rice Terraces</summary>
+                <p class="text-slate-700 mt-2">Tegalalang, Tirta Empul, art market.</p>
+              </details>
+              <details class="border rounded-2xl p-5 card-shadow">
+                <summary class="font-semibold cursor-pointer">Day 3 — Nusa Penida</summary>
+                <p class="text-slate-700 mt-2">Kelingking, Angel's Billabong, Crystal Bay.</p>
+              </details>
+            </div>
+          </div>
+
+          <div id="tab-inclusions" class="hidden">
+            <div class="grid md:grid-cols-2 gap-6">
+              <ul class="border rounded-2xl p-5 card-shadow list-disc pl-5 space-y-1 text-slate-700">
+                <li>Hotel stay with breakfast</li>
+                <li>Airport transfers</li>
+                <li>Guided tours</li>
+              </ul>
+              <ul class="border rounded-2xl p-5 card-shadow list-disc pl-5 space-y-1 text-slate-700">
+                <li>Entry tickets</li>
+                <li>Ferry to Nusa Penida</li>
+                <li>24/7 support</li>
+              </ul>
+            </div>
+          </div>
+
+          <div id="tab-exclusions" class="hidden">
+            <ul class="border rounded-2xl p-5 card-shadow list-disc pl-5 space-y-1 text-slate-700">
+              <li>Flights</li>
+              <li>Personal expenses</li>
+              <li>Travel insurance</li>
+            </ul>
+          </div>
+
+          <div id="tab-reviews" class="hidden">
+            <div class="border rounded-2xl p-5 card-shadow">
+              <div class="flex items-center gap-3">
+                <div class="heading text-3xl font-bold">4.8</div>
+                <div>
+                  <div class="rating-star">★★★★★</div>
+                  <div class="text-xs text-slate-500">Based on 128 reviews</div>
+                </div>
+              </div>
+              <div id="reviewList" class="grid md:grid-cols-2 gap-4 mt-4"></div>
+              <div class="mt-4 text-sm text-slate-600">Writing new reviews is demo-only here.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Mobile Sticky CTA -->
+        <div class="md:hidden fixed bottom-0 left-0 right-0 bg-white sticky-cta p-3 border-t">
+          <div class="max-w-7xl mx-auto px-3 flex items-center justify-between">
+            <div>
+              <div class="text-xs text-slate-500">From</div>
+              <div class="font-semibold"><span id="pkgPriceMobile">₹79,999</span> / person</div>
+            </div>
+            <button onclick="quickBook()" class="px-5 py-3 rounded-xl bg-[var(--primary)] text-white font-semibold">Book Now</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="page-about" class="hidden">
+      <div class="max-w-7xl mx-auto px-4 lg:px-8 py-10 lg:py-14">
+        <div class="grid lg:grid-cols-2 gap-10 items-center">
+          <div>
+            <h2 class="heading text-3xl lg:text-4xl font-bold uppercase">Travel brighter. Travel safer. Travel Solar.</h2>
+            <p class="text-slate-700 mt-4">We craft joyful, worry-free journeys with trusted partners, smart planning, and dedicated support.</p>
+            <div class="grid grid-cols-2 gap-4 mt-6">
+              <div class="p-5 border rounded-2xl card-shadow">
+                <div class="heading text-3xl font-bold">50k+</div>
+                <div class="text-slate-600 text-sm">Happy travelers</div>
+              </div>
+              <div class="p-5 border rounded-2xl card-shadow">
+                <div class="heading text-3xl font-bold">80+</div>
+                <div class="text-slate-600 text-sm">Global destinations</div>
+              </div>
+              <div class="p-5 border rounded-2xl card-shadow">
+                <div class="heading text-3xl font-bold">10+</div>
+                <div class="text-slate-600 text-sm">Years experience</div>
+              </div>
+              <div class="p-5 border rounded-2xl card-shadow">
+                <div class="heading text-3xl font-bold">4.8</div>
+                <div class="text-slate-600 text-sm">Average rating</div>
+              </div>
+            </div>
+          </div>
+          <div class="grid grid-cols-2 gap-4">
+            <div class="rounded-2xl border card-shadow aspect-[4/3] bg-sky-100 grid place-items-center text-sky-700">Our Team</div>
+            <div class="rounded-2xl border card-shadow aspect-[4/3] bg-emerald-100 grid place-items-center text-emerald-700">Partners</div>
+            <div class="rounded-2xl border card-shadow aspect-[4/3] bg-orange-100 grid place-items-center text-orange-700 col-span-2">Certifications & Safety</div>
+          </div>
+        </div>
+
+        <div class="mt-12">
+          <h3 class="heading text-2xl font-bold">Meet the Team</h3>
+          <div id="teamGrid" class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-6"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- BLOG -->
+    <section id="page-blog" class="hidden">
+      <div class="max-w-7xl mx-auto px-4 lg:px-8 py-10 lg:py-14">
+        <div class="flex items-end justify-between gap-6">
+          <div>
+            <h2 class="heading text-3xl lg:text-4xl font-bold">Travel Tips & Stories</h2>
+            <p class="text-slate-600 mt-2">Guides, deals, and inspiration from our travel experts.</p>
+          </div>
+          <div class="hidden md:flex items-center gap-3">
+            <button id="toggleView" class="px-3 py-2 rounded-lg border" onclick="toggleBlogView()">Toggle Grid/List</button>
+          </div>
+        </div>
+        <div class="mt-8 grid md:grid-cols-3 gap-6" id="blogGrid"></div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="page-contact" class="hidden">
+      <div class="max-w-7xl mx-auto px-4 lg:px-8 py-10 lg:py-14">
+        <div class="grid lg:grid-cols-2 gap-8">
+          <div>
+            <h2 class="heading text-3xl lg:text-4xl font-bold">Contact Us</h2>
+            <p class="text-slate-600 mt-2">We usually reply within a few hours.</p>
+
+            <div class="mt-6 space-y-3 text-slate-700">
+              <div>📍 123 Solar Street, Sunshine City</div>
+              <div>✉️ hello@solartourism.com</div>
+              <div>📞 +91 932252 7567</div>
+              <div>🕘 Mon–Sat 9:00–18:00</div>
+            </div>
+
+            <div class="mt-6 border rounded-2xl p-5 card-shadow">
+              <div class="font-semibold mb-3">Send an Enquiry (Demo)</div>
+              <div class="grid sm:grid-cols-2 gap-3">
+                <input id="enq-name" class="px-3 py-2 rounded-lg border" placeholder="Full Name" />
+                <input id="enq-email" class="px-3 py-2 rounded-lg border" placeholder="Email" />
+                <input id="enq-phone" class="px-3 py-2 rounded-lg border" placeholder="Phone" />
+                <input id="enq-destination" class="px-3 py-2 rounded-lg border" placeholder="Destination" />
+                <input id="enq-dates" type="date" class="px-3 py-2 rounded-lg border" />
+                <select id="enq-guests" class="px-3 py-2 rounded-lg border">
+                  <option>1 guest</option>
+                  <option>2 guests</option>
+                  <option>3 guests</option>
+                  <option>4+ guests</option>
+                </select>
+              </div>
+              <textarea id="enq-message" class="mt-3 w-full px-3 py-2 rounded-lg border" rows="4" placeholder="Tell us about your trip..."></textarea>
+              <div class="mt-3 flex items-center gap-3">
+                <button onclick="submitEnquiry()" class="px-5 py-3 rounded-xl bg-[var(--secondary)] text-white font-semibold">Send Enquiry</button>
+                <span class="text-xs text-slate-500">Note: This is a demo form. It won’t send an email.</span>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <div class="rounded-2xl overflow-hidden border card-shadow">
+              <iframe title="Google Map" src="https://www.google.com/maps?q=New%20York&output=embed" width="100%" height="420" style="border:0;" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+            <div class="mt-4 grid grid-cols-3 gap-3">
+              <a href="https://wa.me/9322527567" target="_blank" rel="noopener" class="px-3 py-2 rounded-lg bg-emerald-50 text-emerald-700 text-center">WhatsApp</a>
+              <a href="tel:+919322527567" class="px-3 py-2 rounded-lg bg-sky-50 text-sky-700 text-center">Call</a>
+              <a href="mailto:dhekaneritesh@gmail.com" class="px-3 py-2 rounded-lg bg-orange-50 text-orange-700 text-center">Email</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-slate-900 text-white mt-16">
+    <div class="max-w-7xl mx-auto px-4 lg:px-8 py-12 grid md:grid-cols-5 gap-8">
+      <div class="md:col-span-2">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-white/10 grid place-items-center text-white text-lg">☀️</div>
+          <div>
+            <div class="heading text-xl font-bold">Solar Tourism</div>
+            <div class="text-white/80 text-sm">Explore the World with Solar Tourism</div>
+          </div>
+        </div>
+        <p class="text-white/80 mt-4 text-sm leading-relaxed">Handpicked packages, flexible dates, and friendly support to make your trips brighter and stress‑free.</p>
+        <div class="mt-5 flex items-center gap-3">
+          <a aria-label="Facebook" href="#" class="w-9 h-9 grid place-items-center rounded-full bg-white/10 hover:bg-white/20 transition">f</a>
+          <a aria-label="Instagram" href="#" class="w-9 h-9 grid place-items-center rounded-full bg-white/10 hover:bg-white/20 transition">📷</a>
+          <a aria-label="YouTube" href="#" class="w-9 h-9 grid place-items-center rounded-full bg-white/10 hover:bg-white/20 transition">▶️</a>
+          <a aria-label="Twitter" href="#" class="w-9 h-9 grid place-items-center rounded-full bg-white/10 hover:bg-white/20 transition">𝕏</a>
+        </div>
+      </div>
+
+      <div>
+        <div class="heading font-bold mb-3">Quick Links</div>
+        <ul class="space-y-2 text-white/90 text-sm">
+          <li><button class="hover:underline" onclick="navigate('home')">Home</button></li>
+          <li><button class="hover:underline" onclick="navigate('about')">About Us</button></li>
+          <li><button class="hover:underline" onclick="navigate('destinations')">Destinations</button></li>
+          <li><button class="hover:underline" onclick="navigate('packages')">Packages</button></li>
+          <li><button class="hover:underline" onclick="navigate('blog')">Blog</button></li>
+          <li><button class="hover:underline" onclick="navigate('contact')">Contact</button></li>
+        </ul>
+      </div>
+
+      <div>
+        <div class="heading font-bold mb-3">Contact</div>
+        <ul class="space-y-2 text-white/90 text-sm">
+          <li>📞 +1 9322527567</li>
+          <li>✉️ hello@solartourism.com</li>
+          <li>📍 123 Solar Street, Sunshine City</li>
+          <li><a class="underline" href="https://wa.me/9322527567" target="_blank" rel="noopener">WhatsApp Chat</a></li>
+        </ul>
+      </div>
+
+      <div class="md:col-span-2">
+        <div class="heading font-bold mb-3">Subscribe for the best travel deals</div>
+        <p class="text-white/80 text-sm">Get fresh itineraries, seasonal offers, and expert tips straight to your inbox.</p>
+        <div class="mt-4 flex flex-col sm:flex-row gap-2">
+          <input id="footerEmail" class="flex-1 px-4 py-3 rounded-xl bg-white text-slate-800 placeholder-slate-500" placeholder="you@email.com" />
+          <button onclick="subscribeFooter()" class="px-5 py-3 rounded-xl bg-[var(--secondary)] text-white font-semibold">Subscribe</button>
+        </div>
+      </div>
+    </div>
+    <div class="border-t border-white/15">
+      <div class="max-w-7xl mx-auto px-4 lg:px-8 py-4 text-xs text-white/80 flex flex-col md:flex-row items-center justify-between gap-2">
+        <div>© <span id="year"></span> Solar Tourism. All rights reserved.</div>
+        <div class="flex gap-4">
+          <a href="#" onclick="alert('Demo Terms')" class="hover:underline">Terms</a>
+          <a href="#" onclick="alert('Demo Privacy')" class="hover:underline">Privacy</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Enquiry Modal -->
+  <div id="enquiryModal" class="hidden fixed inset-0 z-[60] bg-black/40">
+    <div class="absolute inset-0 grid place-items-center p-4">
+      <div class="w-full max-w-xl bg-white rounded-2xl p-5 border card-shadow">
+        <div class="flex items-center justify-between">
+          <div class="heading text-xl font-bold">Quick Enquiry (Demo)</div>
+          <button onclick="closeEnquiry()" class="text-slate-500 hover:text-slate-700">✕</button>
+        </div>
+        <p class="text-sm text-slate-600 mt-1">This will open WhatsApp with your details.</p>
+        <div class="grid sm:grid-cols-2 gap-3 mt-4">
+          <input id="qe-name" class="px-3 py-2 rounded-lg border" placeholder="Full Name" />
+          <input id="qe-email" class="px-3 py-2 rounded-lg border" placeholder="Email" />
+          <input id="qe-destination" class="px-3 py-2 rounded-lg border" placeholder="Destination" />
+          <input id="qe-dates" type="date" class="px-3 py-2 rounded-lg border" />
+          <textarea id="qe-message" class="sm:col-span-2 px-3 py-2 rounded-lg border" rows="3" placeholder="Your message (optional)"></textarea>
+        </div>
+        <div class="mt-4 flex items-center justify-end gap-2">
+          <button onclick="closeEnquiry()" class="px-4 py-2 rounded-lg border">Cancel</button>
+          <button onclick="submitQuickEnquiry()" class="px-4 py-2 rounded-lg bg-[var(--secondary)] text-white">Send</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
